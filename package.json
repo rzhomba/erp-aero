@@ -1,0 +1,45 @@
+{
+  "name": "erp-aero",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/app.ts",
+    "test": "jest",
+    "build": "tsc",
+    "start": "node build/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rzhomba/erp-aero.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/rzhomba/erp-aero/issues"
+  },
+  "homepage": "https://github.com/rzhomba/erp-aero#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.15",
+    "@types/jest": "^29.2.6",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
+    "eslint": "^8.32.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "jest": "^29.3.1",
+    "nodemon": "^2.0.20",
+    "ts-jest": "^29.0.5",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mysql2": "^3.0.1",
+    "sequelize": "^6.28.0"
+  }
+}
