@@ -24,10 +24,14 @@ module.exports = {
       uploaded: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      updated: {
+        allowNull: false,
+        type: Sequelize.DATE
       }
     });
   },
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.dropTable('files');
   }
 };

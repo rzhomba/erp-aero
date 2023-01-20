@@ -18,12 +18,12 @@ module.exports = {
         type: Sequelize.STRING
       },
       revoke_token_until: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE
       }
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+  async down(queryInterface) {
+    await queryInterface.dropTable('users');
   }
 };
