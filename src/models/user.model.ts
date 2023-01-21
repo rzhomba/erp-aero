@@ -5,7 +5,8 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare user_id: CreationOptional<number>
   declare id: string
   declare password: string
-  declare revoke_token_until: Date | null
+  declare revoke_access_token_until: Date | null
+  declare revoke_refresh_token_until: Date | null
 }
 
 User.init({
@@ -17,14 +18,19 @@ User.init({
   id: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
   },
-  revoke_token_until: {
+  revoke_access_token_until: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: true
+  },
+  revoke_refresh_token_until: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 }, { sequelize, timestamps: false })
 export default User
