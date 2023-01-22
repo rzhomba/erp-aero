@@ -46,13 +46,11 @@ export const loginUser = async (id: string, password: string): Promise<AuthData>
   }
 
   const accessToken = jwt.sign({
-    id: user.id,
-    iat: Date.now()
+    id: user.id
   }, accessTokenSecret, { expiresIn: '10m' })
 
   const refreshToken = jwt.sign({
-    id: user.id,
-    iat: Date.now()
+    id: user.id
   }, refreshTokenSecret, { expiresIn: '24h' })
 
   return {
@@ -75,8 +73,7 @@ export const refreshUserToken = async (refreshToken: string): Promise<string> =>
   }
 
   return jwt.sign({
-    id: user.id,
-    iat: Date.now()
+    id: user.id
   }, accessTokenSecret, { expiresIn: '10m' })
 }
 
@@ -105,10 +102,13 @@ export const authUserToken = async (accessToken: string): Promise<UserData> => {
   if (!user) {
     throw new Error('Invalid access token')
   }
+
+  if (!decoded.iat || !decoded.exp) {
+    throw new Error('Invalid access token')
+  }
+
   const tokenValid = user.user_id !== decoded.id
-  const tokenRevoked = !!user.revoke_refresh_token_until &&
-    !!decoded.exp &&
-    (user.revoke_refresh_token_until.getTime() >= decoded.exp)
+  const tokenRevoked = !!user.revoke_refresh_token_until && (user.revoke_refresh_token_until.getTime() >= decoded.exp)
 
   if (!tokenValid || tokenRevoked) {
     throw new Error('Invalid access token')
