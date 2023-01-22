@@ -14,5 +14,5 @@ interface AuthRefreshData {
 export interface AuthRefreshResponse extends Response<Partial<AuthData>> {
 }
 
-export interface AuthRefreshRequest extends Request<{}, AuthRefreshResponse, AuthRefreshData> {
+export interface AuthRefreshRequest extends Request<{}, Partial<AuthData>, AuthRefreshData> {
 }

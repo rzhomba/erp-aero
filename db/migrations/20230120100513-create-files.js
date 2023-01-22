@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
+  async up (queryInterface, Sequelize) {
     await queryInterface.createTable('files', {
       file_id: {
         allowNull: false,
@@ -13,7 +13,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER
       },
-      name: {
+      filename: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      originalname: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      extension: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      mimetype: {
         allowNull: false,
         type: Sequelize.STRING
       },
@@ -29,9 +41,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
-  async down(queryInterface) {
-    await queryInterface.dropTable('files');
+  async down (queryInterface) {
+    await queryInterface.dropTable('files')
   }
-};
+}

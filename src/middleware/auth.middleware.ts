@@ -1,8 +1,7 @@
-import { NextFunction, Response } from 'express'
-import { AuthRequest } from '../types/request.types'
+import { NextFunction, Request, Response } from 'express'
 import { authUserToken } from '../services/auth.service'
 
-export const routeAuth = async (req: AuthRequest, res: Response, next: NextFunction) => {
+export const routeAuth = async (req: Request, res: Response, next: NextFunction) => {
   const tokenHeader = req.headers.authorization
   if (!tokenHeader) {
     res.status(401)
@@ -22,8 +21,10 @@ export const routeAuth = async (req: AuthRequest, res: Response, next: NextFunct
     return
   }
 
+  const { userId, id } = user
   res.locals = {
-    id: user.id
+    userId,
+    id
   }
 
   next()

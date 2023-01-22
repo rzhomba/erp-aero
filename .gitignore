@@ -1,6 +1,9 @@
 # Build
 build
 
+# Uploads
+uploads
+
 # Logs
 logs
 *.log

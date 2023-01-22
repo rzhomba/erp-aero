@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { AuthRefreshRequest, AuthRefreshResponse, AuthRequest, AuthResponse } from '../types/request.types'
+import { AuthRefreshRequest, AuthRefreshResponse, AuthRequest, AuthResponse } from '../types/auth.request.types'
 import {
   getUser,
   invalidateAuthToken,

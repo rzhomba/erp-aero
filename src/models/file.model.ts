@@ -4,7 +4,10 @@ import sequelize from '../utils/database'
 class File extends Model<InferAttributes<File>, InferCreationAttributes<File>> {
   declare file_id: CreationOptional<number>
   declare user_id: ForeignKey<number>
-  declare name: string
+  declare filename: string
+  declare originalname: string
+  declare extension: string
+  declare mimetype: string
   declare size: number
   declare uploaded: Date
   declare updated: Date
@@ -19,22 +22,34 @@ File.init({
   user_id: {
     type: DataTypes.INTEGER
   },
-  name: {
+  filename: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
+  },
+  originalname: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  extension: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  mimetype: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
   size: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: false
   },
   uploaded: {
     type: DataTypes.DATE,
-    allowNull: false,
+    allowNull: false
   },
   updated: {
     type: DataTypes.DATE,
-    allowNull: false,
-  },
+    allowNull: false
+  }
 }, { sequelize, timestamps: false })
 
 export default File

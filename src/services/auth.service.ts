@@ -4,6 +4,7 @@ import moment from 'moment'
 import models from '../models'
 import { accessTokenSecret, refreshTokenSecret } from '../utils/env'
 import { AuthData } from '../types/auth.types'
+import { UserData } from '../types/user.types'
 
 const { User } = models
 
@@ -92,7 +93,7 @@ export const invalidateAuthToken = async (id: string): Promise<boolean> => {
   return true
 }
 
-export const authUserToken = async (accessToken: string): Promise<{ id: string }> => {
+export const authUserToken = async (accessToken: string): Promise<UserData> => {
   let decoded: JwtPayload
   try {
     decoded = jwt.verify(accessToken, accessTokenSecret) as JwtPayload
@@ -114,6 +115,7 @@ export const authUserToken = async (accessToken: string): Promise<{ id: string }
   }
 
   return {
+    userId: user.user_id,
     id: user.id
   }
 }
