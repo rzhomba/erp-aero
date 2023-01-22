@@ -37,7 +37,7 @@ export const fileDownload = async (req: FileRequest, res: Response, next?: NextF
 
   const file = await getFile(fileId)
   if (!file) {
-    res.status(400)
+    res.status(404)
       .send()
   } else {
     const filepath = path.join(appRoot.toString(), '/uploads/', file.filename)
@@ -53,7 +53,7 @@ export const fileUpdate = async (req: FileRequest, res: Response, next?: NextFun
 
   const file = await getFile(fileId)
   if (!file || !req.file) {
-    res.status(400)
+    res.status(404)
       .send()
     if (next) next()
     return
@@ -83,7 +83,7 @@ export const fileDelete = async (req: FileRequest, res: Response, next?: NextFun
 
   const file = await getFile(fileId)
   if (!file) {
-    res.status(400)
+    res.status(404)
       .send()
     if (next) next()
     return
@@ -91,7 +91,7 @@ export const fileDelete = async (req: FileRequest, res: Response, next?: NextFun
 
   const { userId } = res.locals
   if (file.user_id !== userId) {
-    res.status(400)
+    res.status(401)
       .send()
   } else {
     await deleteFile(fileId)
@@ -125,7 +125,7 @@ export const file = async (req: FileRequest, res: FileResponse, next?: NextFunct
 
   const file = await getFile(fileId)
   if (!file) {
-    res.status(400)
+    res.status(404)
       .send()
   } else {
     res.status(200)

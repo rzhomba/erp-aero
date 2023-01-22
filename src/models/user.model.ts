@@ -25,11 +25,11 @@ User.init({
     allowNull: false
   },
   revoke_access_token_until: {
-    type: DataTypes.STRING,
+    type: DataTypes.DATE,
     allowNull: true
   },
   revoke_refresh_token_until: {
-    type: DataTypes.STRING,
+    type: DataTypes.DATE,
     allowNull: true
   }
 }, { sequelize, timestamps: false })

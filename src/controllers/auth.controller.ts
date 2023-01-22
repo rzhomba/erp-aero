@@ -12,7 +12,7 @@ import {
 export const register = async (req: AuthRequest, res: Response, next?: NextFunction) => {
   const { id, password } = req.body
   if (!id || !password) {
-    res.status(401)
+    res.status(400)
       .send({})
     if (next) next()
     return
@@ -22,7 +22,7 @@ export const register = async (req: AuthRequest, res: Response, next?: NextFunct
   const phoneRegex = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/g
 
   if (!id.match(emailRegex) && !id.match(phoneRegex)) {
-    res.status(401)
+    res.status(400)
       .send({})
     if (next) next()
     return
@@ -30,7 +30,7 @@ export const register = async (req: AuthRequest, res: Response, next?: NextFunct
 
   const exists = await userExists(id)
   if (exists) {
-    res.status(401)
+    res.status(400)
       .send({})
     if (next) next()
     return
@@ -86,17 +86,12 @@ export const refresh = async (req: AuthRefreshRequest, res: AuthRefreshResponse,
 }
 
 export const logout = async (req: Request, res: AuthResponse, next?: NextFunction) => {
-  const { id } = res.locals
+  const { userId } = res.locals
 
-  const success = await invalidateAuthToken(id)
+  await invalidateAuthToken(userId)
 
-  if (success) {
-    res.status(200)
-      .send()
-  } else {
-    res.status(401)
-      .send()
-  }
+  res.status(200)
+    .send()
 
   if (next) {
     next()
@@ -108,7 +103,7 @@ export const userInfo = async (req: Request, res: Response, next?: NextFunction)
 
   const user = await getUser(id)
   if (!user) {
-    res.status(401)
+    res.status(404)
       .send()
   } else {
     res.status(200)

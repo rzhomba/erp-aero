@@ -68,7 +68,7 @@ export const refreshUserToken = async (refreshToken: string): Promise<string> =>
     throw new Error('User not found')
   }
 
-  if (user.revoke_refresh_token_until && decoded.exp && user.revoke_refresh_token_until.getTime() >= decoded.exp) {
+  if (user.revoke_refresh_token_until && decoded.exp && user.revoke_refresh_token_until.getTime() >= decoded.exp * 1000) {
     throw new Error('Token is not valid')
   }
 
@@ -77,17 +77,15 @@ export const refreshUserToken = async (refreshToken: string): Promise<string> =>
   }, accessTokenSecret, { expiresIn: '10m' })
 }
 
-export const invalidateAuthToken = async (id: string): Promise<boolean> => {
-  const user = await User.findOne({ where: { id } })
-  if (!user) {
-    return false
-  }
-
+export const invalidateAuthToken = async (id: number) => {
   const date = new Date()
-  user.revoke_access_token_until = moment(date).add(10, 'm').toDate()
-  user.revoke_refresh_token_until = moment(date).add(24, 'h').toDate()
 
-  return true
+  await User.update({
+    revoke_access_token_until: moment(date).add(10, 'm').toDate(),
+    revoke_refresh_token_until: moment(date).add(24, 'h').toDate()
+  }, {
+    where: { user_id: id }
+  })
 }
 
 export const authUserToken = async (accessToken: string): Promise<UserData> => {
@@ -108,7 +106,7 @@ export const authUserToken = async (accessToken: string): Promise<UserData> => {
   }
 
   const tokenValid = user.user_id !== decoded.id
-  const tokenRevoked = !!user.revoke_refresh_token_until && (user.revoke_refresh_token_until.getTime() >= decoded.exp)
+  const tokenRevoked = !!user.revoke_access_token_until && (user.revoke_access_token_until.getTime() >= decoded.exp * 1000)
 
   if (!tokenValid || tokenRevoked) {
     throw new Error('Invalid access token')
